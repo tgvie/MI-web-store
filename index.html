@@ -4,15 +4,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Little Legends</title>
+
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.png" sizes="any">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- GOOGLE ICONS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+
 </head>
 
 <body>
+    <main>
+        <header>
+            <nav>
+                <a href="/"><img src="assets/images/Logo.png"></a>
+                <button aria-label="View Shopping Cart"><span class="material-symbols-outlined">shopping_bag</span></button>
+            </nav>
+        </header>
+        <h1>SHOP</h1>
 
+        <form>
+            <ul>
+                <li class="type-here">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" autocomplete="given-name" required>
+                </li>
 
+                <li class="type-here">
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" autocomplete="family-name" required>
+                </li>
 
-    <script src="main.js"></script>
+                <li class="type-here">
+                    <label for="address">Street Address</label>
+                    <input type="text" id="address" autocomplete="street-address" required>
+                </li>
+
+                <li class="type-here">
+                    <label for="postcode">Postcode</label>
+                    <input type="text" id="postcode" autocomplete="postal-code" required>
+                </li>
+
+                <li class="type-here">
+                    <label for="city">City</label>
+                    <input type="text" id="city" autocomplete="address-level2" required>
+                </li>
+
+                <li class="type-here">
+                    <label for="doorcode">Door Code</label>
+                    <input type="text" id="doorcode">
+                </li>
+
+                <li class="type-here">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" autocomplete="email" required>
+                </li>
+
+                <li class="type-here">
+                    <label for="phonenr">Phone Number</label>
+                    <input type="tel" id="phonenr" autocomplete="tel" required>
+                </li>
+
+                <li class="type-here">
+                    <input type="radio" id="paycard" name="cardorinvoice">
+                    <label for="paycard">Card</label>
+
+                    <input type="radio" id="payinvoice" name="cardorinvoice">
+                    <label for="payinvoice">Invoice</label>
+                </li>
+
+                <li class="type-here">
+                    <input type="checkbox" id="agreeprivacy" required aria-required="true">
+                    <label for="agreeprivacy">I agree to the Privacy Policy.</label>
+                </li>
+
+                <li>
+                    <input type="checkbox" id="newsoffers" checked>
+                    <label for="newsoffers">I would like to receive news and offers.</label>
+                </li>
+            </ul>
+
+            <div class="order-clear">
+                <button class="clearbtn" type="reset">Clear Form</button>
+                <button class="orderbtn" type="submit">Place Order</button>
+              </div>
+        </form>
+    </main>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
