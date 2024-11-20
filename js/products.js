@@ -166,7 +166,7 @@ productsPage.addEventListener('click', (e) => {
         const productId = e.target.getAttribute("data-id"); //Target product-id
         let totalSum = document.getElementById(`total-${productId}`); //Target html-<span> that displays the total
         let currentTotal = parseInt(totalSum.innerText); //Get the total and convert to number
-        totalSum.innerText = currentTotal + 1; //Increase total by 1 and update it in <span>
+        totalSum.innerText = currentTotal + 1; //Increase total by 1 and update it visually
     }
 
     // Check if the clicked element is minus-btn
@@ -174,7 +174,7 @@ productsPage.addEventListener('click', (e) => {
         const productId = e.target.getAttribute("data-id"); //Target product-id
         let totalSum = document.getElementById(`total-${productId}`); //Target html-<span> that displays the total
         let currentTotal = parseInt(totalSum.innerText); //Get the total and convert to number
-        if (currentTotal > 0) { //Only works if current total is less than 0, so there is no -number
+        if (currentTotal > 0) { //Decrease total by 1 only if current total is less than 0, so there is no -number
             totalSum.innerText = currentTotal -1;
         }
     }
