@@ -1,4 +1,4 @@
-import { products } from "./js/products.js";
+import { products } from "./products.js";
 
 // ---------- TARGET HTML PRODUCTS PAGE ----------
 const productsPage = document.querySelector("#products-page");
