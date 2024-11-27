@@ -1,14 +1,25 @@
 @import 'vendor/reset';
 
+@import 'base';
+
+@media screen and (min-width: 600px) {
+    @import 'tablet';
+}
+
+@media screen and (min-width: 1025px) {
+    @import 'desktop';
+}
+
+
+
 .cart-btn {
     text-decoration: none;
 }
 
-img {
+.product-image {
     width: 200px;
 }
 
 .order-summary {
     background-color: rgb(219, 184, 184);
 }
-
