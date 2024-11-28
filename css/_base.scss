@@ -69,7 +69,8 @@ h1 {
 
   img {
     width: 48px;
-    height: 48px;
+    max-width: 100%;
+    height: auto;
   }
 }
 

@@ -18,8 +18,9 @@ $text-color: #333333;
   cursor: pointer;
   border: 0;
   outline: none;
-  display: inline-grid;
-  place-items: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
   font-family: $primary-font;
   background: linear-gradient(
@@ -47,22 +48,18 @@ $text-color: #333333;
   display: inline-grid;
   place-content: center;
   border-radius: 50%;
-  background-color: rgba(51, 51, 51, 0.1);
+  background-color: rgba(51, 51, 51, 0.3);
   transition-duration: 0.4s;
 
   &:hover {
-    background-color: rgba(51, 51, 51, 0.3);
-    box-shadow: rgba(51, 51, 51, 0.4) 0px 2px 4px, rgba(255, 182, 193, 0.3) 0px 7px 13px -3px, rgba(51, 51, 51, 0.2) 0px -3px 0px inset;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: rgba(255, 182, 193, 0.4) 0px 2px 4px, rgba(255, 182, 193, 0.3) 0px 7px 13px -3px, rgba(255, 182, 193, 0.2) 0px -3px 0px inset;
   }
 }
 
 /* IMPORTS
 ----------------------------- */
 @import "base";
-
-@media screen and (min-width: 600px) {
-  @import "tablet";
-}
 
 @media screen and (min-width: 1025px) {
   @import "desktop";

@@ -143,26 +143,26 @@ function reorganizeProducts() {
   // Print sorted one
   products.forEach((item) => {
     productsPage.innerHTML += `
-        <article class="item-card">
-          <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
-          <h2>${item.name}</h2>
-          <h3>${item.category}</h3>
-          <p>${item.price} kr</p>
-          <p>${item.rating}</p>
-  
-          <!-- PLUS-MINUS BUTTONS -->
-          <div class="product-buttons" id="product-${item.id}">
-            <div class="plus-minus-buttons">
-              <button class="minus-btn" data-id="${item.id}" aria-label="Decrease quantity">-</button>
-              <span class="plusminus-amount" id="total-${item.id}">0</span>
-              <button class="plus-btn" data-id="${item.id}" aria-label="Increase quantity">+</button>
-            </div>
+      <article class="product-card">
+        <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
+        <h2>${item.name}</h2>
+        <h3>${item.category}</h3>
+        <p>${item.price} kr</p>
+        <p>${item.rating}</p>
 
-            <!-- ADD TO CART BUTTON -->
-            <button class="add-cart-btn" data-id="${item.id}">Add to Cart</button>
+        <!-- PLUS-MINUS BUTTONS -->
+        <div class="product-buttons" id="product-${item.id}">
+          <div class="plus-minus-buttons">
+            <button class="minus-btn" data-id="${item.id}" aria-label="Decrease quantity">-</button>
+            <span class="plusminus-amount" id="total-${item.id}">0</span>
+            <button class="plus-btn" data-id="${item.id}" aria-label="Increase quantity">+</button>
           </div>
-        </article>
-      `;
+
+          <!-- ADD TO CART BUTTON -->
+          <button class="add-cart-btn" data-id="${item.id}">Add to Cart</button>
+        </div>
+      </article>
+    `;
   });
 }
 
