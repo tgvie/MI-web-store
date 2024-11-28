@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
     <title>Little Legends</title>
@@ -19,41 +19,44 @@
 
     <!-- GOOGLE ICONS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
-
 </head>
 
 <body>
     <main>
         <header>
             <nav>
-                <a href="/fed24d-js-intro-inl-1-webshop-tgvie/"><img src="assets/images/Logo.png"></a>
-                <a href="#order-summary" class="cart-btn" aria-label="View Shopping Cart"><span
-                        class="shopping-bag material-symbols-outlined">shopping_bag</span></a>
+                <a href="/fed24d-js-intro-inl-1-webshop-tgvie/"><img class="logo-img" src="assets/images/Logo.png"
+                        width="500" height="200"
+                        alt="Little Legends logo featuring a cute chibi character with cat ears, wearing a white hoodie and a dark blue backpack, standing next to the brand name 'Little Legends' in playful blue and pink text surrounded by two small stars on the left."></a>
             </nav>
+
+<!--             <a href="#order-summary" class="cart-btn" aria-label="View Shopping Cart">
+                <span class="shopping-bag material-symbols-outlined">shopping_bag</span>
+            </a> -->
         </header>
 
-        <h1>SHOP</h1>
+        <h1>Shop</h1>
 
         <!-- SORT BUTONS -->
         <div class="sort-buttons-container">
             <button class="sort-btn" aria-label="Sort items by name">
-                <img src="assets/icons/sort-alpha.png" width="48" height="48">
+                <img src="assets/icons/sort-alpha.png" width="72" height="72" alt="Sort alphebetically A to Z">
             </button>
 
             <button class="sort-btn" aria-label="Sort items by price">
-                <img src="assets/icons/sort-price.png" width="48" height="48">
+                <img src="assets/icons/sort-price.png" width="72" height="72" alt="Sort by price, low to high">
             </button>
 
             <button class="sort-btn" aria-label="Sort items by category">
-                <img src="assets/icons/sort-cat.png" width="48" height="48">
+                <img src="assets/icons/sort-cat.png" width="72" height="72" alt="Sort by category">
             </button>
 
             <button class="sort-btn" aria-label="Sort items by rating">
-                <img src="assets/icons/sort-rating.png" width="48" height="48">
+                <img src="assets/icons/sort-rating.png" width="72" height="72" alt="Sort by rating, high to low">
             </button>
         </div>
 
-        <div id="products-page">
+        <div class="products-page" id="products-page">
             <!-- Javascript here -->
         </div>
 
@@ -77,7 +80,7 @@
 
                 <li class="type-here">
                     <label for="address">Street Address*</label>
-                    <input type="text" id="address" autocomplete="street-address" required>
+                    <input type="text" id="address" autocomplete="address-line1" required>
                 </li>
 
                 <li class="type-here">
@@ -101,8 +104,8 @@
                 </li>
 
                 <li class="type-here">
-                    <label for="phonenr">Phone Number*</label>
-                    <input type="tel" id="phonenr" autocomplete="tel" required>
+                    <label for="phoneno">Phone Number*</label>
+                    <input type="tel" id="phoneno" autocomplete="tel" required>
                 </li>
 
                 <li class="type-here">Payment Options*<br>
@@ -122,13 +125,12 @@
                     <input type="checkbox" id="newsoffers" checked>
                     <label for="newsoffers">I would like to receive news and offers.</label>
                 </li>
+
+                <li class="type-here">
+                    <label for="discountcode">Discount Code</label>
+                    <input type="text" id="discountcode" autocomplete="off">
+                </li>
             </ul>
-
-            <li class="type-here">
-                <label for="discountcode">Discount Code</label>
-                <input type="text" id="discountcode" autocomplete="off">
-            </li>
-
 
             <div class="order-clear">
                 <button class="clearbtn" type="reset">Clear Order & Form</button>

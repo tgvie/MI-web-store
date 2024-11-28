@@ -1,25 +1,69 @@
-@import 'vendor/reset';
+@import "vendor/reset";
 
-@import 'base';
+/* FONTS
+----------------------------- */
+$primary-font: "Poppins", serif;
+$secondary-font: "Nunito", serif;
+
+/* COLOR THEME
+----------------------------- */
+$primary-color: #a3d9ff;
+$secondary-color: #ffb6c1;
+$accent-color: #ffeb3b;
+$text-color: #333333;
+
+/* BUTTON THEMES
+----------------------------- */
+@mixin buttonTheme {
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  display: inline-grid;
+  place-items: center;
+
+  font-family: $primary-font;
+  background: linear-gradient(
+    to bottom right,
+    $secondary-color,
+    $primary-color
+  );
+  color: #ffffff;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 0.25rem #ffffff, -0.125rem -0.125rem 1rem $secondary-color,
+      0.125rem 0.125rem 1rem $primary-color;
+  }
+}
+
+@mixin secondButtonTheme {
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  display: inline-grid;
+  place-content: center;
+  border-radius: 50%;
+  background-color: rgba(51, 51, 51, 0.1);
+  transition-duration: 0.4s;
+
+  &:hover {
+    background-color: rgba(51, 51, 51, 0.3);
+    box-shadow: rgba(51, 51, 51, 0.4) 0px 2px 4px, rgba(255, 182, 193, 0.3) 0px 7px 13px -3px, rgba(51, 51, 51, 0.2) 0px -3px 0px inset;
+  }
+}
+
+/* IMPORTS
+----------------------------- */
+@import "base";
 
 @media screen and (min-width: 600px) {
-    @import 'tablet';
+  @import "tablet";
 }
 
 @media screen and (min-width: 1025px) {
-    @import 'desktop';
-}
-
-
-
-.cart-btn {
-    text-decoration: none;
-}
-
-.product-image {
-    width: 200px;
-}
-
-.order-summary {
-    background-color: rgb(219, 184, 184);
+  @import "desktop";
 }

@@ -3,14 +3,10 @@ import { products } from "./products.js";
 // ---------- TARGET HTML PRODUCTS PAGE ----------
 const productsPage = document.querySelector("#products-page");
 
-/*
- * PRINT PRODUCTS
- ** for each object in the array
- ** create corresponding HTML-elements
- */
+// ---------- PRINT PRODUCTS ----------
 products.forEach((item) => {
   productsPage.innerHTML += `
-    <article class="item-card">
+    <article class="product-card">
         <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
         <h2>${item.name}</h2>
         <h3>${item.category}</h3>
@@ -18,14 +14,16 @@ products.forEach((item) => {
         <p>${item.rating}</p>
 
         <!-- PLUS-MINUS BUTTONS -->
-        <div class="plus-minus-btn" id="product-${item.id}">
+        <div class="product-buttons" id="product-${item.id}">
+          <div class="plus-minus-buttons">
             <button class="minus-btn" data-id="${item.id}" aria-label="Decrease quantity">-</button>
-            <span id="total-${item.id}">0</span>
+            <span class="plusminus-amount" id="total-${item.id}">0</span>
             <button class="plus-btn" data-id="${item.id}" aria-label="Increase quantity">+</button>
-        </div>
+          </div>
 
-        <!-- ADD TO CART BUTTON -->
-        <button class="add-cart-btn" data-id="${item.id}">Add to Cart</button>
+          <!-- ADD TO CART BUTTON -->
+          <button class="add-cart-btn" data-id="${item.id}">Add to Cart</button>
+        </div>
     </article>
     `;
 });
@@ -45,8 +43,7 @@ productsPage.addEventListener("click", (e) => {
     const productId = e.target.getAttribute("data-id"); //Target product-id
     let totalSum = document.getElementById(`total-${productId}`); //Target html-<span> that displays total count
     let currentTotal = parseInt(totalSum.innerText); //Get the total and convert to number
-    if (currentTotal > 0) {
-      //Decrease total by 1 only if current total is less than 0, so there is no -number
+    if (currentTotal > 0) { //Decrease total by 1 only if current total is less than 0, so there is no -number
       totalSum.innerText = currentTotal - 1;
     }
   }
@@ -57,8 +54,7 @@ productsPage.addEventListener("click", (e) => {
     const productAmount = document.getElementById(`total-${productId}`); //Use the product-id that shows the total of that product
     const currentTotal = parseInt(productAmount.innerText); //Get the current total from HTML element and convert to number, how many user want to add
 
-    if (currentTotal > 0) {
-      //Only triggers if there are more than 0 item
+    if (currentTotal > 0) { //Cannot add if no amount is selected
       addToCart(productId, currentTotal);
 
       productAmount.innerText = 0; //Reset the amount visually so user knows product has been added
@@ -73,14 +69,15 @@ function addToCart(productId, totalAmount) {
   // Search cart-array to see if the product is already in cart
   const productInCart = cart.findIndex((item) => item.id === productId); //Callback function to specify the condition to find the product to add
 
+  // If product is already in cart (if the returned index from Ln 68 is 0 or higher)
   if (productInCart > -1) {
-    //If product is already in cart (if the returned index from Ln 73 is 0 or higher)
     cart[productInCart].amount += totalAmount; //Update its amount
   }
 
-  // Else if product not in cart, add it
+  // Else if product not already in cart, add it
   else {
     const addProduct = products.find((item) => item.id === productId); //Find in products-array the item(id) to add
+    
     if (addProduct) {
       // If found, add product to cart
       cart.push({ ...addProduct, amount: totalAmount }); //... operator to duplicate the object(product) to visiually add its info to the cart
@@ -96,8 +93,7 @@ function updateOrderSummary() {
 
   orderSummary.innerHTML = "<h2>Order Summary</h2>";
 
-  if (cart.length === 0) {
-    //If no items in cart
+  if (cart.length === 0) { //If no items in cart
     orderSummary.innerHTML += "<p>Your cart is empty.</p>";
     return;
   }
@@ -118,8 +114,10 @@ function sortProducts(sortCriteria) {
     if (sortCriteria === "name" || sortCriteria === "category") {
       if (item1[sortCriteria].toLowerCase() < item2[sortCriteria].toLowerCase())
         return -1; //If item1's criteria is alphabetically less than item2's, place item1 before item2 in the sorted array
+
       if (item1[sortCriteria].toLowerCase() > item2[sortCriteria].toLowerCase())
         return 1; //If item1's criteria is alphabetically greater than item2's, place item1 after item2 in the sorted array
+
       return 0; //Items are equal in sorting, remains unchanged
     }
 
@@ -139,25 +137,30 @@ function sortProducts(sortCriteria) {
 
 // ---------- REORGANIZE PRODUCTS ORDER AFTER SORTING ----------
 function reorganizeProducts() {
-  productsPage.innerHTML = ""; //Visually remove original sorting order to replace with sorted one
+  // Visually remove original order to replace with sorted one
+  productsPage.innerHTML = ""; 
+
+  // Print sorted one
   products.forEach((item) => {
     productsPage.innerHTML += `
         <article class="item-card">
-            <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
-            <h2>${item.name}</h2>
-            <h3>${item.category}</h3>
-            <p>${item.price} kr</p>
-            <p>${item.rating}</p>
+          <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
+          <h2>${item.name}</h2>
+          <h3>${item.category}</h3>
+          <p>${item.price} kr</p>
+          <p>${item.rating}</p>
   
-            <!-- PLUS-MINUS BUTTONS -->
-            <div class="plus-minus-btn" id="product-${item.id}">
-                <button class="minus-btn" data-id="${item.id}" aria-label="Decrease quantity">-</button>
-                <span id="total-${item.id}">0</span>
-                <button class="plus-btn" data-id="${item.id}" aria-label="Increase quantity">+</button>
+          <!-- PLUS-MINUS BUTTONS -->
+          <div class="product-buttons" id="product-${item.id}">
+            <div class="plus-minus-buttons">
+              <button class="minus-btn" data-id="${item.id}" aria-label="Decrease quantity">-</button>
+              <span class="plusminus-amount" id="total-${item.id}">0</span>
+              <button class="plus-btn" data-id="${item.id}" aria-label="Increase quantity">+</button>
             </div>
-  
+
             <!-- ADD TO CART BUTTON -->
             <button class="add-cart-btn" data-id="${item.id}">Add to Cart</button>
+          </div>
         </article>
       `;
   });

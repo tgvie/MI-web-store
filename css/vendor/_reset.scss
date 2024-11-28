@@ -11,6 +11,8 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* Remove default margin in favour of better control in authored CSS */
@@ -29,6 +31,8 @@ ol[role='list'] {
 body {
   min-height: 100vh;
   line-height: 1.5;
+  margin: 0;
+  padding: 0;
 }
 
 /* Set shorter line heights on headings and interactive elements */
