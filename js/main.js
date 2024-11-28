@@ -187,3 +187,25 @@ sortButtons.forEach((button, index) => {
     }
   });
 });
+
+// ---------- CLICK-EVENTS FOR CART & TOP BUTTONS ----------
+document.addEventListener('DOMContentLoaded', () => {
+  const goTopBtn = document.getElementById('goTopBtn');
+  const goCartBtn = document.getElementById('goCartBtn');
+
+  // Scroll to cart button
+  goCartBtn.addEventListener('click', () => {
+    window.scrollTo(0, 8300);
+    /*const orderSummary = document.getElementById('order-summary');
+      orderSummary.scrollIntoView(); 
+      This was better but being covered by header on phone screens*/
+  });
+
+  // Scroll to top button
+  goTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});

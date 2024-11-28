@@ -114,7 +114,7 @@ export const products = [
   {
     id: 190,
     name: "The Boy and His Yeti",
-    price: 319,
+    price: 409,
     category: "Celestial",
     rating: 2,
     amount: 0,
