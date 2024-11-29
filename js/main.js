@@ -84,7 +84,18 @@ function addToCart(productId, totalAmount) {
     }
   }
 
+  popupCartUpdated();
+
   updateOrderSummary();
+}
+
+function popupCartUpdated() {
+  const popup = document.getElementById('cartUpdatedPopup');
+  popup.classList.add("show");
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 2000);
 }
 
 // ---------- UPDATE ORDER SUMMARY VISUALLY ----------//
