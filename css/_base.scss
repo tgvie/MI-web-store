@@ -64,8 +64,9 @@ h1 {
 
 .sort-btn {
   @include secondButtonTheme;
+  background-color: rgb(255, 255, 255);
   width: 72px;
-  height: 72px;
+  min-height: 72px;
 
   img {
     width: 48px;
@@ -98,7 +99,7 @@ h1 {
   @include secondButtonTheme;
   color: #ffffff;
   width: 64px;
-  height: 64px;
+  min-height: 64px;
 
   .material-symbols-outlined {
     font-size: 48px;
@@ -164,7 +165,7 @@ h1 {
 .plus-btn {
   @include buttonTheme;
   width: 48px;
-  height: 48px;
+  min-height: 48px;
   border-radius: 50%;
   font-size: 1.5rem;
 }
@@ -211,3 +212,28 @@ h1 {
   margin-block: 100px;
   background-color: rgb(219, 184, 184);
 }
+
+/* FORM
+----------------------------- */
+.invalid-input {
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.invalid-msg {
+  display: block;
+  color: red;
+}
+
+/* CARD & INVOICE
+----------------------------- */
+.hidden {
+  display: none;
+}
+
+.invoice-section,
+.card-section {
+  display: flex;
+  flex-direction: column;
+}
+
