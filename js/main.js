@@ -272,7 +272,6 @@ togglePaymentOptions();
 // -------------------------------------------------------------------------------------------
 // ---------- VALIDATION ---------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------
-const form = document.getElementById('userForm');
 const orderButton = document.querySelector('.orderbtn');
 const privacyBtn = document.getElementById('agreeprivacy');
 
@@ -348,4 +347,27 @@ inputRegex.forEach((input) => {
   button.addEventListener('change', () => {
     validateForm();
   });
+});
+
+// -------------------------------------------------------------------------------------------
+// ---------- CLEAR ORDER AND FORM -----------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+const clearBtn = document.querySelector(".clearbtn");
+const orderSummary = document.querySelector("#order-summary");
+const form = document.getElementById('userForm');
+
+clearBtn.addEventListener('click', (e) => {
+  e.preventDefault(); //Prevent html type="reset" to add custom commands
+
+  // Clear user's form
+  form.reset();
+
+  // Clear order summary
+  cart = [];
+  orderSummary.innerHTML = `
+    <h2>Order Summary</h2>
+    <p>Your cart is empty.</p>
+  `;
+
+  validateForm();
 });
