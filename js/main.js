@@ -371,3 +371,32 @@ clearBtn.addEventListener('click', (e) => {
 
   validateForm();
 });
+
+// -------------------------------------------------------------------------------------------
+// ---------- DISCOUNTS & SPECIAL PRICES -----------------------------------------------------
+// -------------------------------------------------------------------------------------------
+let orderTime = Date.now()
+
+/**
+ * For each product in the cart
+ * Calculate total cost of that product
+ * Add to sum, which then add up to total cost of all products
+ */
+function calculateCartTotal() {
+  return cart.reduce((sum, product) => sum + product.price * product.amount, 0);
+}
+
+// Check date and time for discounts
+function applyDiscount() {
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+
+  let discountMsg = '';
+  let totalDiscount = 0;
+
+  // Monday discount before 10:00
+  if (day === 1 && huor < 10) {
+    totalDiscount = calculateCartTotal() * 0.10; //Apply 10% discount
+  }
+}
