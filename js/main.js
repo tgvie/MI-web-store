@@ -86,7 +86,7 @@ function addToCart(productId, totalAmount) {
     
     if (addProduct) {
       // If found, add product to cart
-      cart.push({ ...addProduct, amount: totalAmount }); //... operator to duplicate the object(product) to visiually add its info to the cart
+      cart.push({ ...addProduct, amount: totalAmount, discountApplied: false }); //... operator to duplicate the object(product) to visiually add its info to the cart
     }
   }
 
@@ -113,6 +113,14 @@ function popupCartUpdated() {
 function updateOrderSummary() {
   const orderSummary = document.querySelector("#order-summary");
 
+  // Check for discount
+  amountDiscount();
+  timeBasedDiscount();
+  disableInvoicePayment();
+
+  // Calculate shipping fee
+  const shippingCost = calculateShippingCost();
+
   orderSummary.innerHTML = "<h2>Order Summary</h2>";
 
   if (cart.length === 0) { //If no items in cart
@@ -128,15 +136,25 @@ function updateOrderSummary() {
     totalPrice += itemTotalPrice;
 
     orderSummary.innerHTML += `
-        <div class="order-item">
+        <div class="ordered-item">
           <p>${item.amount} x ${item.name} - ${itemTotalPrice} kr</p>
         </div>
       `;
   });
 
+  // Discount and Shipping fee
   orderSummary.innerHTML += `
-    <h3>Order Total: ${totalPrice} kr</h3>
-    `;
+    <p><strong>Discount:</strong> ${discountMsg}</p>
+    <p><strong>Shipping fee:</strong> ${shippingCost} kr</p>
+    <p>This fee includes a flat amount of 25 kr, plus 10% of your order total.
+    <br>
+    Get your shipping free by ordering 15+ figures!</p>
+  `;
+
+  // Checkout Total
+  const checkoutTotal = totalPrice - mondayDiscount + shippingCost;
+  orderSummary.innerHTML += `
+    <h3>Checkout Total: ${checkoutTotal} kr</h3>`;
 }
 
 // -------------------------------------------------------------------------------------------
@@ -375,7 +393,8 @@ clearBtn.addEventListener('click', (e) => {
 // -------------------------------------------------------------------------------------------
 // ---------- DISCOUNTS & SPECIAL PRICES -----------------------------------------------------
 // -------------------------------------------------------------------------------------------
-let orderTime = Date.now()
+let discountMsg = "Not available for this order.";
+let mondayDiscount = 0;
 
 /**
  * For each product in the cart
@@ -386,17 +405,44 @@ function calculateCartTotal() {
   return cart.reduce((sum, product) => sum + product.price * product.amount, 0);
 }
 
-// Check date and time for discounts
-function applyDiscount() {
+// Hide invoice if total cost is more than 800kr
+function disableInvoicePayment() {
+  const checkoutTotal = calculateCartTotal();
+  const payInvoiceBtn = document.getElementById('payinvoice');
+  payInvoiceBtn.disabled = checkoutTotal > 800;
+}
+
+// Amount-based discount
+function amountDiscount() {
+  cart.forEach(product => {
+    if (product.amount >= 10 && !product.discountApplied) {
+      product.price = Math.round(product.price * 0.90); //Apply 10% discount for 10+ of the same product and convert price to closest integer
+      product.discountApplied = true; //Mark as discounted
+      discountMsg = "You've ordered 10 of the same figures. Enjoy a sweet <strong>10%</strong> discount on these as a thank you!";
+    }
+  });
+}
+
+// Check date and time for discounts (mondayDiscount)
+function timeBasedDiscount() {
+  //const testDate = new Date("2024-12-16T09:00:00");
   const now = new Date();
   const day = now.getDay();
   const hour = now.getHours();
 
-  let discountMsg = '';
-  let totalDiscount = 0;
-
   // Monday discount before 10:00
-  if (day === 1 && huor < 10) {
-    totalDiscount = calculateCartTotal() * 0.10; //Apply 10% discount
+  if (day === 1 && hour < 10) {
+    mondayDiscount = Math.round(calculateCartTotal() * 0.10); //Apply 10% discount on the total
+    discountMsg = "10% off your entire order - because Mondays deserve a little extra joy!";
   }
+}
+
+// Shipping cost
+function calculateShippingCost() {
+  const totalProducts = cart.reduce((sum, product) => sum + product.amount, 0);
+  if (totalProducts > 15) {
+    return 0; //Free shipping for 15+ products in cart
+  }
+  const checkoutTotal = calculateCartTotal();
+  return Math.round(25 + checkoutTotal * 0.10); //Shipping = 25kr + 10% of total
 }
