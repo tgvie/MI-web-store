@@ -72,26 +72,28 @@ productsPage.addEventListener("click", (e) => {
 let cart = [];
 
 function addToCart(productId, totalAmount) {
-  // Search cart-array to see if the product is already in cart
-  const productInCart = cart.findIndex((item) => item.id === productId); //Callback function to specify the condition to find the product to add
+  // Find the product in products array
+  const addProduct = products.find((item) => item.id === productId); //Find in products-array the item(id) to add
+  const basePrice = addProduct.price;
+  const priceToUse = addProduct.weekendPrice || basePrice;
 
-  // If product is already in cart (if the returned index from Ln 68 is 0 or higher)
+  // Check if product is already in cart
+  const productInCart = cart.findIndex((item) => item.id === productId);
+
+  // If product is already in cart (if returned index is 0 or higher)
   if (productInCart > -1) {
     cart[productInCart].amount += totalAmount; //Update its amount
-  }
-
-  // Else if product not already in cart, add it
-  else {
-    const addProduct = products.find((item) => item.id === productId); //Find in products-array the item(id) to add
-    
-    if (addProduct) {
-      // If found, add product to cart
-      cart.push({ ...addProduct, amount: totalAmount, discountApplied: false }); //... operator to duplicate the object(product) to visiually add its info to the cart
-    }
+    cart[productInCart].totalPrice = cart[productInCart].amount * priceToUse;
+  } else { //Else if product not already in cart, add it
+    cart.push({ 
+      ...addProduct, 
+      amount: totalAmount, 
+      totalPrice: totalAmount * priceToUse, 
+      discountApplied: false 
+    }); //... operator to duplicate the object(product) to visiually add its info to the cart
   }
 
   popupCartUpdated();
-
   updateOrderSummary();
 }
 
@@ -113,13 +115,10 @@ function popupCartUpdated() {
 function updateOrderSummary() {
   const orderSummary = document.querySelector("#order-summary");
 
-  // Check for discount
+  // Calculate shipping and discounts
   amountDiscount();
   timeBasedDiscount();
   disableInvoicePayment();
-
-  // Calculate shipping fee
-  const shippingCost = calculateShippingCost();
 
   orderSummary.innerHTML = "<h2>Order Summary</h2>";
 
@@ -131,8 +130,19 @@ function updateOrderSummary() {
   // Get total price of cart
   let totalPrice = 0;
 
+  // Determine which discount message to display
+  let combinedDiscountMsg = "";
+  if (cart.some(product => product.discountApplied) && mondayDiscount > 0) {
+    combinedDiscountMsg = `You get <strong>10%</strong> off for ordering 10+ of the same figures!
+    <br>
+    Enjoy an additional <strong>10%</strong> discount on your total order as a Monday special!
+    `;
+  }
+
+  const discountMsgToUse = combinedDiscountMsg || discountMsg;
+
   cart.forEach((item) => {
-    const itemTotalPrice = item.price * item.amount;
+    const itemTotalPrice = Math.round(item.totalPrice);
     totalPrice += itemTotalPrice;
 
     orderSummary.innerHTML += `
@@ -142,18 +152,23 @@ function updateOrderSummary() {
       `;
   });
 
-  // Discount and Shipping fee
-  orderSummary.innerHTML += `
-    <p><strong>Discount:</strong> ${discountMsg}</p>
-    <p><strong>Shipping fee:</strong> ${shippingCost} kr</p>
+  // Checkout Total
+  const shippingCost = calculateShippingCost();
+  let shippingInfoMsg = "";
+  if (shippingCost > 0) { //If condition for free shipping is not met
+    shippingInfoMsg = `
     <p>This fee includes a flat amount of 25 kr, plus 10% of your order total.
     <br>
     Get your shipping free by ordering 15+ figures!</p>
-  `;
+    `;
+  }
 
-  // Checkout Total
   const checkoutTotal = totalPrice - mondayDiscount + shippingCost;
+
   orderSummary.innerHTML += `
+    <p><strong>Discount:</strong> ${discountMsgToUse}</p>
+    <p><strong>Shipping fee:</strong> ${shippingCost} kr</p>
+    <p>${shippingInfoMsg}</p>
     <h3>Checkout Total: ${checkoutTotal} kr</h3>`;
 }
 
@@ -201,7 +216,7 @@ function reorganizeProducts() {
         <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
         <h2>${item.name}</h2>
         <h3>${item.category}</h3>
-        <p>${item.price} kr</p>
+        <p>${item.weekendPrice ? Math.round(item.weekendPrice) : item.price} kr</p>
         <p>${item.rating}</p>
 
         <!-- PLUS-MINUS BUTTONS -->
@@ -402,7 +417,7 @@ let mondayDiscount = 0;
  * Add to sum, which then add up to total cost of all products
  */
 function calculateCartTotal() {
-  return cart.reduce((sum, product) => sum + product.price * product.amount, 0);
+  return cart.reduce((sum, product) => sum + product.totalPrice, 0);
 }
 
 // Hide invoice if total cost is more than 800kr
@@ -414,35 +429,80 @@ function disableInvoicePayment() {
 
 // Amount-based discount
 function amountDiscount() {
+  let hasAmountDiscount = false;
+  
   cart.forEach(product => {
     if (product.amount >= 10 && !product.discountApplied) {
-      product.price = Math.round(product.price * 0.90); //Apply 10% discount for 10+ of the same product and convert price to closest integer
+      const activePrice = product.weekendPrice || product.price;
+      product.totalPrice = Math.round(product.amount * activePrice * 0.90);
       product.discountApplied = true; //Mark as discounted
-      discountMsg = "You've ordered 10 of the same figures. Enjoy a sweet <strong>10%</strong> discount on these as a thank you!";
+      hasAmountDiscount = true;
     }
   });
+  
+  if (hasAmountDiscount) {
+    discountMsg = "You've ordered 10+ of the same figures. Enjoy a <strong>10%</strong> off on these as a thank you!";
+  }
 }
 
 // Check date and time for discounts (mondayDiscount)
 function timeBasedDiscount() {
-  //const testDate = new Date("2024-12-16T09:00:00");
-  const now = new Date();
+  const testDate = new Date("2024-12-16T09:00:00");
+  const now = testDate;//new Date();
   const day = now.getDay();
   const hour = now.getHours();
 
   // Monday discount before 10:00
   if (day === 1 && hour < 10) {
-    mondayDiscount = Math.round(calculateCartTotal() * 0.10); //Apply 10% discount on the total
-    discountMsg = "10% off your entire order - because Mondays deserve a little extra joy!";
+    const cartTotal = calculateCartTotal();
+    mondayDiscount = Math.round(cartTotal * 0.10); //Apply 10% discount on the total
+    discountMsg = "Monday special - <strong>10%</strong> off your entire order!";
+  } else {
+    mondayDiscount = 0; //Reset discount outside the time frame
   }
 }
+// Ensure this applied on page load
+timeBasedDiscount ();
 
 // Shipping cost
 function calculateShippingCost() {
   const totalProducts = cart.reduce((sum, product) => sum + product.amount, 0);
-  if (totalProducts > 15) {
+  if (totalProducts >= 15) {
     return 0; //Free shipping for 15+ products in cart
   }
   const checkoutTotal = calculateCartTotal();
   return Math.round(25 + checkoutTotal * 0.10); //Shipping = 25kr + 10% of total
 }
+
+function weekendPriceUp () {
+  //const testDate = new Date("2024-12-13T16:00:00");
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+
+  const isWeekend =
+    (day === 5 && hour >= 15) || //Friday after 15
+    day === 6 || //Saturday
+    (day === 0 && hour < 3); //Sunday before 03
+
+  if (isWeekend) {
+    products.forEach(product => {
+      if (!product.weekendPriceUp) {
+        product.weekendPrice = Math.round(product.price * 1.15);
+        product.weekendPriceUp = true;
+      }
+    });
+  } else {
+    products.forEach(product => {
+      if (product.weekendPriceUp) {
+        product.weekendPrice = product.price;
+        product.weekendPriceUp = false;
+      }
+    });
+  }
+
+  // Re-print products with updated prices
+  reorganizeProducts();
+}
+// Ensure this is applied on page load
+weekendPriceUp();
