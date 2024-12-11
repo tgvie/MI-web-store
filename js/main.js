@@ -1,19 +1,33 @@
 import { products } from "./products.js";
 import { inputRegex } from "./regex.js";
 
+function getRatingEmoji(rating) {
+  if (rating === 1) return "🌕🌑🌑🌑🌑";
+  if (rating === 1.5) return "🌕🌗🌑🌑🌑";
+  if (rating === 2) return "🌕🌕🌑🌑🌑";
+  if (rating === 2.5) return "🌕🌕🌗🌑🌑";
+  if (rating === 3) return "🌕🌕🌕🌑🌑";
+  if (rating === 3.5) return "🌕🌕🌕🌗🌑";
+  if (rating === 4) return "🌕🌕🌕🌕🌑";
+  if (rating === 4.5) return "🌕🌕🌕🌕🌗";
+  if (rating === 5) return "🌕🌕🌕🌕🌕";
+}
+
 // -------------------------------------------------------------------------------------------
 // ---------- PRINT PRODUCTS -----------------------------------------------------------------
 // -------------------------------------------------------------------------------------------
 const productsPage = document.querySelector("#products-page");
 
 products.forEach((item) => {
+  const ratingWithEmoji = getRatingEmoji(item.rating);
+
   productsPage.innerHTML += `
     <article class="product-card">
         <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
         <h2>${item.name}</h2>
+        <p>${ratingWithEmoji}</p>
         <h3>${item.category}</h3>
-        <p>${item.price} kr</p>
-        <p>${item.rating}</p>
+        <p>${item.weekendPrice ? Math.round(item.weekendPrice) : item.price} kr</p>
 
         <!-- PLUS-MINUS BUTTONS -->
         <div class="product-buttons" id="product-${item.id}">
@@ -215,13 +229,15 @@ function reorganizeProducts() {
 
   // Print sorted one
   products.forEach((item) => {
+    const ratingWithEmoji = getRatingEmoji(item.rating);
+
     productsPage.innerHTML += `
       <article class="product-card">
         <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
         <h2>${item.name}</h2>
+        <p>${ratingWithEmoji}</p>
         <h3>${item.category}</h3>
         <p>${item.weekendPrice ? Math.round(item.weekendPrice) : item.price} kr</p>
-        <p>${item.rating}</p>
 
         <!-- PLUS-MINUS BUTTONS -->
         <div class="product-buttons" id="product-${item.id}">
