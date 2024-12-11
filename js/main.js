@@ -95,6 +95,10 @@ function addToCart(productId, totalAmount) {
 
   popupCartUpdated();
   updateOrderSummary();
+
+  if (cart.length > 0) {
+    startInactiveTimer();
+  }
 }
 
 // -------------------------------------------------------------------------------------------
@@ -389,9 +393,7 @@ const clearBtn = document.querySelector(".clearbtn");
 const orderSummary = document.querySelector("#order-summary");
 const form = document.getElementById('userForm');
 
-clearBtn.addEventListener('click', (e) => {
-  e.preventDefault(); //Prevent html type="reset" to add custom commands
-
+function clearCartForm() {
   // Clear user's form
   form.reset();
 
@@ -402,6 +404,12 @@ clearBtn.addEventListener('click', (e) => {
     <p>Your cart is empty.</p>
   `;
 
+  inactiveTimerStarted = false;
+}
+
+clearBtn.addEventListener('click', (e) => {
+  e.preventDefault(); //Prevent html type="reset" to add custom commands
+  clearCartForm();
   validateForm();
 });
 
@@ -447,8 +455,8 @@ function amountDiscount() {
 
 // Check date and time for discounts (mondayDiscount)
 function timeBasedDiscount() {
-  const testDate = new Date("2024-12-16T09:00:00");
-  const now = testDate;//new Date();
+  //const testDate = new Date("2024-12-16T09:00:00");
+  const now = new Date();
   const day = now.getDay();
   const hour = now.getHours();
 
@@ -506,3 +514,16 @@ function weekendPriceUp () {
 }
 // Ensure this is applied on page load
 weekendPriceUp();
+
+let inactiveTimerStarted = false;
+
+function startInactiveTimer() {
+  if (inactiveTimerStarted) return; //Prevent starting multiple timers
+
+  inactiveTimerStarted = true;
+
+  setTimeout(() => {
+    alert("Order timeout! Your cart and form have been cleared. Feel free to restart your order.");
+    clearCartForm();
+  }, 900000); //15 min in milliseconds
+}
