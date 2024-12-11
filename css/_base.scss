@@ -1,4 +1,9 @@
 main {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  margin: 0;
+
   background: linear-gradient(
       rgba(255, 255, 255, 0.9),
       rgba(255, 255, 255, 0.9)
@@ -47,8 +52,9 @@ h1 {
   font-family: $primary-font;
   text-transform: uppercase;
   color: $primary-color;
-  font-size: 3.5rem;
-
+  font-size: 4rem;
+  text-shadow: 0 0 10px $primary-color;
+  
   display: flex;
   justify-content: center;
 }
@@ -58,7 +64,7 @@ h1 {
 .sort-buttons-container {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 30px;
   padding-block: 30px;
 }
 
@@ -98,11 +104,11 @@ h1 {
 .floating-btn {
   @include secondButtonTheme;
   color: #ffffff;
-  width: 64px;
-  min-height: 64px;
+  width: 100px;
+  min-height: 100px;
 
   .material-symbols-outlined {
-    font-size: 48px;
+    font-size: 64px;
   }
 
   &:hover {
@@ -206,15 +212,124 @@ h1 {
   }
 }
 
+/* ORDER SUMMARY & FORM CONTAINER
+----------------------------- */
+.summary-and-form {
+  display: flex;
+  flex-direction: column;
+  margin-inline: 20px;
+}
+
 /* ORDER SUMMARY
 ----------------------------- */
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
 .order-summary {
-  margin-block: 100px;
-  background-color: rgb(219, 184, 184);
+  scroll-margin-top: 110px; //Prevent top part being hidden by header when scroll there
+  margin: 100px 0 50px 20px;
+  font-family: $secondary-font;
+  color: $text-color;
+  font-size: 1.3rem;
+  padding: 30px;
+  max-width: 700px;
+  border: 3px solid;
+  border-image: linear-gradient(to bottom, 
+  $secondary-color, rgba(0, 0, 0, 0)) 1 100%;
+
+  h2 {
+    font-family: $primary-font;
+    font-size: 2rem;
+    margin: 0;
+  }
+}
+
+.cart-info-msg {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.shipcost-info {
+  margin-top: -20px;
+}
+
+.item-in-cart {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.incart-price {
+  margin-left: auto;
+  text-align: right;
 }
 
 /* FORM
 ----------------------------- */
+.user-form {
+  max-width: 700px;
+  font-family: $secondary-font;
+  color: $text-color;
+  font-size: 1.3rem;
+  padding: 50px;
+
+  border: 1px solid $secondary-color;
+  border-radius: 8px;
+  background-color: rgba(255, 182, 193, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    font-family: $primary-font;
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 50px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  input {
+    border: none;
+    height: 32px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 1rem;
+
+    &:hover {
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.type-here {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inline-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.form-info-msg {
+  font-size: 0.99rem;
+  margin-bottom: 10px;
+}
+
 .invalid-input {
   border: 1px solid red;
   background-color: rgba(255, 0, 0, 0.2);
@@ -223,17 +338,139 @@ h1 {
 .invalid-msg {
   display: block;
   color: red;
+  font-size: 1rem;
 }
 
 /* CARD & INVOICE
 ----------------------------- */
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.payment-options {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  input[type="radio"] {
+    width: auto;
+    margin: 0 -12px 0 0;
+    box-shadow: none;
+  }
+
+  label {
+    font-weight: normal;
+    margin: 0;
+  }
 }
 
 .invoice-section,
 .card-section {
   display: flex;
   flex-direction: column;
+  margin-top: -10px;
+  margin-bottom: 20px;
 }
 
+/* CHECKBOXES
+----------------------------- */
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
+
+.checkbox-field {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+
+  input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    box-shadow: none;
+  }
+
+  label {
+    margin: 0;
+
+    span {
+      font-size: 0.99rem;
+      font-weight: normal;
+    }
+  }
+}
+
+/* DISCOUNT FIELD
+----------------------------- */
+.discount-field {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: end;
+  margin-block: 30px;
+
+  label {
+    margin: 0;
+  }
+
+  input {
+    max-width: 200px;
+  }
+}
+
+/* CLEAR & ORDER BUTTONS
+----------------------------- */
+.order-clear {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.clearbtn, .orderbtn {
+  font-size: 1.2rem;
+  font-family: $primary-font;
+  padding: 15px;
+  width: 250px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.clearbtn {
+  background-color: $secondary-color;
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: #ff91af;
+  }
+}
+
+.orderbtn {
+  background-color: $primary-color;
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: #60b6e0;
+  }
+
+  &:disabled {
+    background-color: #dbe8f3;
+    cursor: not-allowed;
+  }
+}
+
+/* FOOTER
+----------------------------- */
+footer {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-family: $secondary-font;
+  padding: 20px 50px;
+  font-size: 1rem;
+  margin-top: 100px;
+}

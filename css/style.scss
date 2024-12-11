@@ -48,6 +48,8 @@ $text-color: #333333;
   border-radius: 50%;
   background-color: rgba(51, 51, 51, 0.3);
   transition-duration: 0.4s;
+  border-color: $primary-color;
+  box-shadow: 0 0 10px $primary-color;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);

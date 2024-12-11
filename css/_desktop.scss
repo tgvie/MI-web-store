@@ -1,0 +1,36 @@
+/* SORT BUTTONS
+----------------------------- */
+.sort-buttons-container {
+    gap: 50px;
+  }
+
+/* FLOATING BUTTONS
+----------------------------- */
+.floating-btn {
+    width: 100px;
+    min-height: 100px;
+  
+    .material-symbols-outlined {
+      font-size: 72px;
+    }
+  }
+
+/* ORDER SUMMARY & FORM CONTAINER
+----------------------------- */
+.summary-and-form {
+    margin-top: 100px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.order-summary {
+    scroll-margin-top: 200px;
+    flex: 1;
+    max-width: 45%; 
+}
+
+.user-form {
+    flex: 1;
+    max-width: 45%;
+}

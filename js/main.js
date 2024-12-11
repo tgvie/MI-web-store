@@ -134,14 +134,18 @@ function popupCartUpdated() {
 // ---------- UPDATE ORDER SUMMARY VISUALLY --------------------------------------------------
 // -------------------------------------------------------------------------------------------
 function updateOrderSummary() {
-  const orderSummary = document.querySelector("#order-summary");
+  const orderSummary = document.querySelector("#orderSummary");
 
   // Calculate shipping and discounts
   amountDiscount();
   timeBasedDiscount();
   disableInvoicePayment();
 
-  orderSummary.innerHTML = "<h2>Order Summary</h2>";
+  orderSummary.innerHTML = `
+    <h2>Order Summary</h2>
+    <p class="cart-info-msg">⏳ Your order and form will be cleared after 15 minutes once you add the first item.</p>
+    <hr>
+  `;
 
   if (cart.length === 0) { //If no items in cart
     orderSummary.innerHTML += "<p>Your cart is empty.</p>";
@@ -168,7 +172,7 @@ function updateOrderSummary() {
 
     orderSummary.innerHTML += `
         <div class="ordered-item">
-          <p>${item.amount} x ${item.name} - ${itemTotalPrice} kr</p>
+          <p class="item-in-cart">${item.amount} x ${item.name}<span class="incart-price">${itemTotalPrice} kr</span></p>
         </div>
       `;
   });
@@ -178,7 +182,7 @@ function updateOrderSummary() {
   let shippingInfoMsg = "";
   if (shippingCost > 0) { //If condition for free shipping is not met
     shippingInfoMsg = `
-    <p>This fee includes a flat amount of 25 kr, plus 10% of your order total.
+    <p class="cart-info-msg shipcost-info">📦 This fee includes a flat amount of 25 kr, plus 10% of your order total.
     <br>
     Get your shipping free by ordering 15+ figures!</p>
     `;
@@ -187,10 +191,12 @@ function updateOrderSummary() {
   const checkoutTotal = totalPrice - mondayDiscount + shippingCost;
 
   orderSummary.innerHTML += `
+    <hr>
     <p><strong>Discount:</strong> ${discountMsgToUse}</p>
     <p><strong>Shipping fee:</strong> ${shippingCost} kr</p>
     <p>${shippingInfoMsg}</p>
-    <h3>Checkout Total: ${checkoutTotal} kr</h3>`;
+    <hr>
+    <h3 class="item-in-cart">Checkout Total: <span class="incart-price">${checkoutTotal} kr</span></h3>`;
 }
 
 // -------------------------------------------------------------------------------------------
@@ -255,7 +261,7 @@ const goCartBtn = document.getElementById('goCartBtn');
 
 // Scroll to cart button
 goCartBtn.addEventListener('click', () => {
-  window.scrollTo(0, 8300);
+  orderSummary.scrollIntoView();
 });
 
 // Scroll to top button
@@ -373,7 +379,7 @@ inputRegex.forEach((input) => {
 // ---------- CLEAR ORDER AND FORM -----------------------------------------------------------
 // -------------------------------------------------------------------------------------------
 const clearBtn = document.querySelector(".clearbtn");
-const orderSummary = document.querySelector("#order-summary");
+const orderSummary = document.querySelector("#orderSummary");
 const form = document.getElementById('userForm');
 
 function clearCartForm() {
