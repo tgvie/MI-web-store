@@ -18,11 +18,13 @@ function getRatingEmoji(rating) {
 // -------------------------------------------------------------------------------------------
 const productsPage = document.querySelector("#products-page");
 
-products.forEach((item) => {
-  const ratingWithEmoji = getRatingEmoji(item.rating);
+function printProducts(products) {
+  productsPage.innerHTML = "";
+  products.forEach((item) => {
+    const ratingWithEmoji = getRatingEmoji(item.rating);
 
-  productsPage.innerHTML += `
-    <article class="product-card">
+    productsPage.innerHTML += `
+      <article class="product-card">
         <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
         <h2>${item.name}</h2>
         <p>${ratingWithEmoji}</p>
@@ -42,7 +44,8 @@ products.forEach((item) => {
         </div>
     </article>
     `;
-});
+  });
+}
 
 // -------------------------------------------------------------------------------------------
 // ---------- CLICK-EVENTS WITHIN PRODUCTS CONTAINER -----------------------------------------
@@ -217,44 +220,8 @@ function sortProducts(sortCriteria) {
     }
   });
 
-  reorganizeProducts();
+  printProducts(products);
 }
-
-// -------------------------------------------------------------------------------------------
-// ---------- REORGANIZE PRODUCTS ORDER AFTER SORTING ----------------------------------------
-// -------------------------------------------------------------------------------------------
-function reorganizeProducts() {
-  // Visually remove original order to replace with sorted one
-  productsPage.innerHTML = ""; 
-
-  // Print sorted one
-  products.forEach((item) => {
-    const ratingWithEmoji = getRatingEmoji(item.rating);
-
-    productsPage.innerHTML += `
-      <article class="product-card">
-        <img class="product-image" src="${item.img.url}" alt="${item.img.alt}">
-        <h2>${item.name}</h2>
-        <p>${ratingWithEmoji}</p>
-        <h3>${item.category}</h3>
-        <p>${item.weekendPrice ? Math.round(item.weekendPrice) : item.price} kr</p>
-
-        <!-- PLUS-MINUS BUTTONS -->
-        <div class="product-buttons" id="product-${item.id}">
-          <div class="plus-minus-buttons">
-            <button class="minus-btn" data-id="${item.id}" aria-label="Decrease quantity">-</button>
-            <span class="plusminus-amount" id="total-${item.id}">0</span>
-            <button class="plus-btn" data-id="${item.id}" aria-label="Increase quantity">+</button>
-          </div>
-
-          <!-- ADD TO CART BUTTON -->
-          <button class="add-cart-btn" data-id="${item.id}">Add to Cart</button>
-        </div>
-      </article>
-    `;
-  });
-}
-
 
 // -------------------------------------------------------------------------------------------
 // ---------- CLICK-EVENTS FOR SORT BUTTONS --------------------------------------------------
@@ -413,13 +380,12 @@ function clearCartForm() {
   // Clear user's form
   form.reset();
 
-  // Clear order summary
+  // Clear cart
   cart = [];
   orderSummary.innerHTML = `
     <h2>Order Summary</h2>
     <p>Your cart is empty.</p>
   `;
-
   inactiveTimerStarted = false;
 }
 
@@ -526,7 +492,7 @@ function weekendPriceUp () {
   }
 
   // Re-print products with updated prices
-  reorganizeProducts();
+  printProducts(products);
 }
 // Ensure this is applied on page load
 weekendPriceUp();
