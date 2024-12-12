@@ -143,7 +143,7 @@ function updateOrderSummary() {
 
   orderSummary.innerHTML = `
     <h2>Order Summary</h2>
-    <p class="cart-info-msg">⏳ Your order and form will be cleared after 15 minutes once you add the first item.</p>
+    <p class="cart-info-msg">⏳ Your order and personal details will be cleared after 15 minutes once you add the first item.</p>
     <hr>
   `;
 
@@ -390,6 +390,8 @@ function clearCartForm() {
   cart = [];
   orderSummary.innerHTML = `
     <h2>Order Summary</h2>
+    <p class="cart-info-msg">⏳ Your order and personal details will be cleared after 15 minutes once you add the first item.</p>
+    <hr>
     <p>Your cart is empty.</p>
   `;
   inactiveTimerStarted = false;
