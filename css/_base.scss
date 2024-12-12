@@ -40,15 +40,45 @@ nav {
   padding-block: 10px;
 }
 
-.cart-btn {
-  align-self: center;
-  position: relative;
-  right: -50px;
+/* HERO SECTION
+----------------------------- */
+.hero-shop-image {
+  width: 100%;
+  min-height: 300px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  background: rgba(0, 0, 0, 0.2);
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  h1 {
+    font-family: $primary-font;
+    color: $secondary-color;
+    font-size: 3.5rem;
+    margin: 0;
+
+    text-shadow: 
+    0 0 5px #ffffff,
+    0 0 10px #ffb6c1,
+    0 0 15px #ffffff,
+    0 0 20px #ff91af,
+    0 0 25px #ffffff,
+    0 0 30px #ff6f99;
+  }
+
+  p {
+    font-family: $primary-font;
+    font-size: 1.5rem;
+    color: white;
+    margin: 0;
+  }
 }
 
 /* SHOP
 ----------------------------- */
-h1 {
+.shop-title {
   font-family: $primary-font;
   text-transform: uppercase;
   color: $primary-color;
@@ -217,7 +247,7 @@ h1 {
 .summary-and-form {
   display: flex;
   flex-direction: column;
-  margin: 100px 20px;
+  margin: 100px 50px;
 }
 
 /* ORDER SUMMARY
@@ -369,6 +399,13 @@ hr {
   flex-direction: column;
   margin-top: -10px;
   margin-bottom: 20px;
+
+  // Hide arrows from type="number" input
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 /* CHECKBOXES
@@ -466,7 +503,7 @@ input[type="radio"] {
 ----------------------------- */
 footer {
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
   font-family: $secondary-font;
   padding: 20px 50px;

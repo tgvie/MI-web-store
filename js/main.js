@@ -141,6 +141,7 @@ function updateOrderSummary() {
   timeBasedDiscount();
   disableInvoicePayment();
 
+  // Reset order summary content
   orderSummary.innerHTML = `
     <h2>Order Summary</h2>
     <p class="cart-info-msg">⏳ Your order and personal details will be cleared after 15 minutes once you add the first item.</p>
@@ -149,6 +150,7 @@ function updateOrderSummary() {
 
   if (cart.length === 0) { //If no items in cart
     orderSummary.innerHTML += "<p>Your cart is empty.</p>";
+    updateOrderButtonAndPaymentOptions(); //Ensure Place Order button is disabled
     return;
   }
 
@@ -197,6 +199,9 @@ function updateOrderSummary() {
     <p>${shippingInfoMsg}</p>
     <hr>
     <h3 class="item-in-cart">Checkout Total: <span class="incart-price">${checkoutTotal} kr</span></h3>`;
+
+    // Ensure Place Order button and paymen options are updated
+    updateOrderButtonAndPaymentOptions();
 }
 
 // -------------------------------------------------------------------------------------------
@@ -335,7 +340,7 @@ function validateForm() {
 
   // If card is selected, no need for any input nor validation
   if (payCardBtn.checked) {
-    orderButton.disabled = !privacyBtn.checked; //Ensure Privacy Policy is checked
+    orderButton.disabled = !privacyBtn.checked || cart.length === 0; //Ensure Privacy Policy is checked and cart is not empty
     return;
   }
 
@@ -353,7 +358,7 @@ function validateForm() {
   }
 
   // Enable or disable the Place Order button
-  orderButton.disabled = !allValid;
+  orderButton.disabled = !allValid || cart.length === 0;
 }
 
 // Validate field on blur
@@ -380,11 +385,50 @@ inputRegex.forEach((input) => {
 // -------------------------------------------------------------------------------------------
 const clearBtn = document.querySelector(".clearbtn");
 const orderSummary = document.querySelector("#orderSummary");
-const form = document.getElementById('userForm');
+
+// Update the state of the Place Order-button and payment options
+function updateOrderButtonAndPaymentOptions() {
+  const orderButton = document.querySelector('.orderbtn');
+  const cartNotEmpty = cart.length > 0;
+  const cartTotal = calculateCartTotal();
+
+  // Disable Place Order button if the cart is empty or privacy checkbox isn't checked
+  orderButton.disabled = !cartNotEmpty || !privacyBtn.checked;
+
+  // Disable invoice if cart total exceeds 800kr
+  const payInvoiceBtn = document.getElementById('payinvoice');
+  if (cartTotal > 800) {
+    payInvoiceBtn.disabled = true;
+    payInvoiceBtn.checked = false; //Unselect invoice
+    invoiceSection.classList.add('hidden'); //Hide invoice section
+  } else {
+    payInvoiceBtn.disabled = false;
+    if (payInvoiceBtn.checked) {
+      invoiceSection.classList.remove('hidden'); //Show invoice section if selected
+    } else {
+      invoiceSection.classList.add('hidden'); //Hide invoice section if not selected
+    }
+  }
+}
 
 function clearCartForm() {
+  const form = document.getElementById('userForm');
+  const invalidMessages = document.querySelectorAll('.invalid-msg');
+  const invalidInputs = document.querySelectorAll('.invalid-input');
+  const orderSummary = document.querySelector("#orderSummary");
+
   // Clear user's form
   form.reset();
+
+  // Reset invalid messages
+  invalidMessages.forEach((message) => {
+    message.style.display = 'none';
+  });
+
+  // Reset invalid input background
+  invalidInputs.forEach((input) => {
+    input.classList.remove('invalid-input');
+  });
 
   // Clear cart
   cart = [];
@@ -394,13 +438,24 @@ function clearCartForm() {
     <hr>
     <p>Your cart is empty.</p>
   `;
+
+  // Reset payment options
+  const payInvoiceBtn = document.getElementById('payinvoice');
+  payInvoiceBtn.disabled = false; // Re-enable invoice
+  payInvoiceBtn.checked = false;
+
+  const payCardBtn = document.getElementById('paycard');
+  payCardBtn.checked = false;
+
+  // Reset order button state
+  updateOrderButtonAndPaymentOptions();
+
   inactiveTimerStarted = false;
 }
 
 clearBtn.addEventListener('click', (e) => {
   e.preventDefault(); //Prevent html type="reset" to add custom commands
   clearCartForm();
-  validateForm();
 });
 
 // -------------------------------------------------------------------------------------------
@@ -517,3 +572,41 @@ function startInactiveTimer() {
     clearCartForm();
   }, 900000); //15 min in milliseconds
 }
+
+// -------------------------------------------------------------------------------------------
+// ---------- PLACE ORDER AND SHOW DELIVERY DATE ---------------------------------------------
+// -------------------------------------------------------------------------------------------
+const formContainer = document.querySelector('.user-form');
+
+orderButton.addEventListener('click', (e) => {
+  e.preventDefault(); //Prevent the default form submission
+
+  if (orderButton.disabled) return;  //Ensure all validations are met
+
+  // Calculate delivery date - 3 days from now
+  const currentDate = new Date();
+  const deliveryDate = new Date();
+  deliveryDate.setDate(currentDate.getDate() + 3);
+
+  // Format delivery date
+  const formattedDate = deliveryDate.toLocaleDateString(undefined, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  // Replace the form's content
+  formContainer.innerHTML = `
+    <div class="order-confirmation">
+      <h2>Order Confirmation</h2>
+      <p>Thank you for your order!</p>
+      <p>Your order will be delivered by <strong>${formattedDate}</strong>.</p>
+      <p><strong>Order's summary:</strong></p>
+      <ul>${cart.map((item) =>
+        `<li>${item.amount} x ${item.name} - ${Math.round(item.totalPrice)} kr</li>`).join('')}
+      </ul>
+      <h3>Total: ${calculateCartTotal()} kr</h3>
+    </div>
+  `;
+});
