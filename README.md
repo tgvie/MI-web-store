@@ -1,31 +1,67 @@
-# Webshop Project
+# 🛍️ Little Legends E-Commerce
 
-[Link to my page – Little Legends](https://medieinstitutet.github.io/fed24d-js-intro-inl-1-webshop-tgvie/)
+**🔗 Demo: https://tgvie.github.io/MI-web-store/**
 
-This project is a single-page responsive webshop for Little Legends. The application is built with accessibility in mind, and it adheres to specific requirements for order processing, discounts, and user interaction.
+This project features a simple e-commerce built with vanilla JavaScript. Users can browse a list of products, add them to their cart, and place an order. The cart includes quantity controls, dynamic price updates, discount rules, and a form for order details.
 
-## Technologies Used
-![html-badge](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![sass-badge](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
-![javascript-badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![eslint-badge](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white)
-![prettier-badge](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)
+<details>
+<summary><strong>📐 Wireframe & Visual Identity</strong></summary>
 
-## Layout Wireframes
-![Visual identity](/assets/design/visual-identity.jpg)
-![Wireframe for top part of the page](/assets/design/wireframe-top-page.png)
-![Wireframe for bottom part of the page](/assets/design/wireframe-bottom-page.png)
+| Visual Identity |
+| --------------- |
+| ![Visual identity](/assets/design/visual-identity.jpg) |
 
-## Validation Results
-#### HTML Validator: 
-![HTML-validator result page 1](/assets/reports/HTML-validator-result-1.png)
-![HTML-validator result page 2](/assets/reports/HTML-validator-result-2.png)
+| Top Page | Bottom Page |
+| -------- | ----------- |
+| ![Top part of the page](/assets/design/wireframe-top-page.png) | ![Bottom part of the page](/assets/design/wireframe-bottom-page.png) |
+</details>
 
-#### CSS Validator:
-![CSS-validator result page 1](/assets/reports/CSS-validator-result-1.png)
-![CSS-validator result page 2](/assets/reports/CSS-validator-result-2.png)
+<details>
+<summary><strong>🖼️ Preview</strong></summary>
 
-#### Lighthouse Report
-![Lighthouse report page 1](/assets/reports/Lighthouse-report-desktop-1.png)
-![Lighthouse report page 2](/assets/reports/Lighthouse-report-desktop-2.png)
-![Lighthouse report page 3](/assets/reports/Lighthouse-report-desktop-3.png)
+| 📱 Phone | 💻 Desktop |
+| ------------------ | ------------------ | 
+| ![Preview Phone Screenshot](assets/reports/preview-phone-screenshot.png) | ![Preview Desktop Screenshot](assets/reports/preview-desktop-screenshot.png) |
+
+### ✨ Featuring
+
+|  |  |  |
+| ----------------- | ---------------- | ---------------- |
+| <strong>Add product to cart</strong> ![Add product to cart](assets/reports/f-1.png) | <strong>Sort after alphabet/price/category/rating</strong> ![Sorting](assets/reports/f-2.png) | <strong>Discounts (apply automatically in cart)</strong> ![Discount](assets/reports/f-3.png) |
+| <strong>Order form with validation</strong> ![Order form](assets/reports/f-4.png) | <strong>Shipping & discount cost calculation</strong> ![Cost calculation](assets/reports/f-5.png) | <strong>Displays estimated delivery date on confirmation</strong> ![Estimate delivery date](assets/reports/f-6.png) |
+</details>
+
+## 🛠️ Tech Stack
+![HTML5](https://img.shields.io/badge/HTML5-%23E34F26.svg?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-%231572B6.svg?style=flat&logo=css3&logoColor=white)
+![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=flat&logo=SASS&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-%23323330.svg?style=flat&logo=javascript&logoColor=%23F7DF1E)
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=flat&logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/Prettier-%23F7B93E.svg?style=flat&logo=prettier&logoColor=black)
+
+<hr>
+
+## 📋 Documentation
+<details>
+<summary><strong>Lighthouse Report</strong></summary>
+
+| Desktop |
+| ------- |
+| ![Desktop Lighthouse Report](assets/reports/lighthouse-desktop.png) |
+</details>
+
+<details>
+<summary><strong>Code Validation</strong></summary>
+
+| HTML | CSS |
+| ---- | --- |
+| ![HTML Validation 1](/assets/reports/HTML-validator-result-1.png) | ![CSS Validation 1](/assets/reports/CSS-validator-result-1.png) |
+| ![HTML Validation 2](/assets/reports/HTML-validator-result-2.png) | ![CSS Validation 2](/assets/reports/CSS-validator-result-2.png) |
+</details>
+
+<div align="right">
+  
+## ✍️ Author/s
+🧑‍💻 [@tgvie](https://github.com/tgvie)
+
+</div>
