@@ -7,9 +7,9 @@ This project features a simple e-commerce built with vanilla JavaScript. Users c
 <details>
 <summary><strong>📐 Wireframe & Visual Identity</strong></summary>
 
-| Top Page | Bottom Page |
-| -------- | ----------- |
-| ![Top part of the page](/assets/design/wireframe-top-page.png) | ![Bottom part of the page](/assets/design/wireframe-bottom-page.png) |
+| Wireframe Top | Wireframe Bottom |
+| ------------- | ---------------- |
+| ![Top page](/assets/design/wireframe-top-page.png) | ![Bottom page](/assets/design/wireframe-bottom-page.png) |
 
 | Visual Identity |
 | --------------- |
